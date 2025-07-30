@@ -3,7 +3,6 @@ import { FormLogin } from "./_components/FormLogin"
 
 export const metadata: Metadata = {
     title: "Dashboard | Login",
-
 }
 
 const LoginPage = () => {
