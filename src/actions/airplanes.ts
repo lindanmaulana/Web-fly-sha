@@ -6,12 +6,19 @@ import prisma from "../../lib/prisma"
 import { ActionResult } from "./login"
 import { revalidatePath } from "next/cache"
 import { uploadFile } from "./uploadFile"
+import { getPublicUrl } from "@/lib/supabase/getPublicUrl"
+import { BUCKET_AIRPLANES } from "../lib/supabase/index"
 
 export const getAllAirplanes = async () => {
     try {
         const result = await prisma.airplane.findMany()
 
-        return result
+        const dataAirplanesFullUrl  = result.map(airplane => ({
+            ...airplane,
+            image: airplane.image ? getPublicUrl(BUCKET_AIRPLANES, airplane.image) : "/image/placeholder.png"
+        }))
+
+        return dataAirplanesFullUrl
     } catch (err) {
         const errorMessage = errorHandler(err)
 

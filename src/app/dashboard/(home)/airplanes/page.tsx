@@ -1,9 +1,8 @@
+import { getAllAirplanes } from "@/actions/airplanes"
 import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
 import Link from "next/link"
-import { columns } from "./_components/Columns"
-import { DataTable } from "@/components/DataTable"
-import { getAllAirplanes } from "@/actions/airplanes"
+import { TableAirplane } from "./_components/TableAirplane"
 
 const AirplanesPage = async () => {
     const data = await getAllAirplanes()
@@ -19,7 +18,7 @@ const AirplanesPage = async () => {
                 </Button>
             </div>
 
-            <DataTable columns={columns} data={data} />
+            <TableAirplane data={data} />
         </>
     )
 }
