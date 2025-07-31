@@ -4,6 +4,9 @@ import { Metadata } from "next"
 import Link from "next/link"
 import { ReactNode } from "react"
 import { ButtonLogout } from "./_components/ButtonLogout"
+import { getSession } from "@/actions/getSession"
+import { redirect } from "next/navigation"
+import { REDIRECT_UNAUTHORIZED, REDIRECT_USER } from "@/lib/routes"
 
 interface DashboardLayoutProps {
     children: ReactNode
@@ -13,7 +16,12 @@ export const metadata: Metadata = {
     title: "Dashboard"
 }
 
-const DashboardLayout = ({children}: DashboardLayoutProps) => {
+const DashboardLayout = async ({children}: DashboardLayoutProps) => {
+    const session = await getSession()
+
+    if(!session) redirect(REDIRECT_UNAUTHORIZED)
+    else if(session.role === "USER") redirect(REDIRECT_USER)
+
     return (
         <section>
             <nav className="border border-muted p-5">

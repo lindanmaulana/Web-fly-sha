@@ -1,11 +1,7 @@
-import { Metadata } from "next"
 import { FormLogin } from "./_components/FormLogin"
 
-export const metadata: Metadata = {
-    title: "Dashboard | Login",
-}
-
-const LoginPage = () => {
+const LoginPage = async () => {
+ 
     return (
         <div className="w-full h-screen ">
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">

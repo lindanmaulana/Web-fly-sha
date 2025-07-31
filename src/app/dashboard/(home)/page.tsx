@@ -5,10 +5,7 @@ const DashboardPage = async () => {
 
     console.log({session})
     return (
-        <div>
-            Wellcome to Dashboard
-            <p>hello world</p>
-        </div>
+        <div>Dashboard Page</div>
     )
 }
 
