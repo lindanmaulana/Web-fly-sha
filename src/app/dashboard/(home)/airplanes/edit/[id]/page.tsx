@@ -1,7 +1,7 @@
 import { getOneAirplanes } from "@/actions/airplanes"
 import { Airplane } from "@/generated/prisma"
-import { FormAirplanes } from "../../_components/FormAirplanes"
 import { Metadata } from "next"
+import { FormAirplanes } from "@/app/dashboard/(home)/airplanes/_components/FormAirplanes"
 
 
 export const metadata: Metadata = {

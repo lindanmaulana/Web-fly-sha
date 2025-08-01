@@ -2,7 +2,7 @@
 
 import { getPublicUrl } from "@/lib/supabase/getPublicUrl"
 import { errorHandler } from "@/lib/utils/errorHandler"
-import { airplanesSchema } from "@/lib/validation/airplanes"
+import { airplaneSchema, airplanesSchema } from "@/lib/validation/airplanes"
 import { revalidatePath } from "next/cache"
 import prisma from "../../lib/prisma"
 import { BUCKET_AIRPLANES } from "../lib/supabase/index"
@@ -99,23 +99,26 @@ export const createAirplane = async (prevState: unknown, formData: FormData): Pr
     }
 }
 
-const airplanesUpdateSchema = airplanesSchema.partial()
 export const updateAirplane = async (prevState: unknown, formData: FormData, id: string): Promise<ActionResult> => {
-    // debug disini
-    const dataUpdate = {
-        code: formData.get("code"),
-        name: formData.get("name"),
-        image: formData.get("image")
-    }
-
+    const dataUpdate = Object.fromEntries(formData)
+    const image = formData.get("image") as File
+    
+    let validated;
     const airplaneUpdate: {
         code?: string
         name?: string
         image?: string
     } = {}
 
-    const validatedFields = airplanesUpdateSchema.safeParse(dataUpdate)
+    if(image.size === 0) {
+        validated = airplanesSchema.omit({image: true})
+    } else {
+        validated = airplanesSchema
+    }
 
+    const validatedFields = validated.safeParse(dataUpdate)
+
+    console.log({validatedFields, dataUpdate})
     if(!validatedFields.success) {
         const errorDesc = validatedFields.error.issues.map((issue) => issue.message)
         return {
@@ -125,10 +128,9 @@ export const updateAirplane = async (prevState: unknown, formData: FormData, id:
         }
     }
 
-    if(validatedFields.data.image) {
-        const image = validatedFields.data.image as File
+    if(image.size > 0) {
         const imageUpload = await uploadFile(image)
-
+    
         if(imageUpload instanceof Error) {
             return {
                 success: false,
@@ -136,7 +138,7 @@ export const updateAirplane = async (prevState: unknown, formData: FormData, id:
                 errorDesc: ['Terjadi masalah pada koneksi, silahkan coba lagi.']
             }
         }
-
+    
         airplaneUpdate.image = imageUpload as string
     }
 
