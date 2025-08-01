@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { FormCreate } from "./_components/FormCreate";
+import { FormAirplanes } from "../_components/FormAirplanes";
 
 export const metadata: Metadata = {
   title: "Airplanes | Create",
@@ -13,7 +13,7 @@ const AirplanesCreatePage = () => {
       <div className="flex flex-row items-center justify-between">
         <div className="my-5 text-2xl font-bold">Tambah data Airplane</div>
       </div>
-      <FormCreate />
+      <FormAirplanes type="ADD" />
     </div>
   );
 };

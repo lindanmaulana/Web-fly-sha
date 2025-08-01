@@ -1,6 +1,6 @@
 import z, { ZodType } from "zod";
 
-export const airplaneSchema: ZodType = z.object({
+export const airplaneSchema = z.object({
     id: z.number(),
     code: z.string(),
     image: z.string(),
@@ -19,11 +19,9 @@ const ACCEPTED_IMAGE_TYPES = [
 const MAX_FILE_SIZE = 2000000 // 2mb
 
 
-export const airplanesCreateSchema: ZodType = z.object({
+export const airplanesSchema = z.object({
     code: z.string({error: "Kode pesawat tidak boleh kosong!"}).regex(/^[A-Z]{3}-[0-9]{3}$/, "Format kode harus [XXX-111]"),
     name: z.string({error: "Nama pesawat tidak boleh kosong!"}).min(4),
     image: z.any().refine((file) => ACCEPTED_IMAGE_TYPES.includes(file.type), "Image harus ber type JPEG, JPG, dan PNG").refine((file) => file.size <= MAX_FILE_SIZE, "Ukuran maksimal 2mb"),
 })
-
-// image: z.any().refine((file: File) => ACCEPTED_IMAGE_TYPES.includes(file.type), "Image harus ber type JPEG, JPG, dan PNG").refine((file: File) => file.size <= MAX_FILE_SIZE, "Image maksimal kurang dari 2mb"),
-export type TypeAirplaneCreateSchema = z.infer<typeof airplanesCreateSchema>
+export type TypeAirplaneCreateSchema = z.infer<typeof airplanesSchema>

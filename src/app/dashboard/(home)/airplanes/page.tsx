@@ -3,6 +3,11 @@ import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
 import Link from "next/link"
 import { TableAirplane } from "./_components/TableAirplane"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+    title: "Dashboard | Airplanes"
+}
 
 const AirplanesPage = async () => {
     const data = await getAllAirplanes()

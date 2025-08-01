@@ -18,8 +18,7 @@ export const useColumnsAirplanes = ()=> {
                     const plane = row.original
 
                     if(!plane.image) return <span>Image not found!</span>
-
-                    console.log({plane})
+                    
                     return (
                         <div>
                             <Image src={plane.image} alt={plane.name} width={180} height={180} className="rounded" />
