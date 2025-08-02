@@ -2,15 +2,13 @@
 
 import { getPublicUrl } from "@/lib/supabase/getPublicUrl"
 import { errorHandler } from "@/lib/utils/errorHandler"
-import { airplaneSchema, airplanesSchema } from "@/lib/validation/airplanes"
+import { airplanesSchema } from "@/lib/validation/airplanes"
 import { revalidatePath } from "next/cache"
 import prisma from "../../lib/prisma"
 import { BUCKET_AIRPLANES } from "../lib/supabase/index"
+import { deleteFile } from "./deleteFile"
 import { ActionResult } from "./login"
 import { uploadFile } from "./uploadFile"
-import { redirect } from "next/navigation"
-import supabase from "@/lib/supabase"
-import { deleteFile } from "./deleteFile"
 
 export const getAllAirplanes = async () => {
     try {
@@ -30,7 +28,6 @@ export const getAllAirplanes = async () => {
     }
 }
 
-
 export const getOneAirplanes = async (id: string) => {
     try {
         const result = await prisma.airplane.findFirst({where: {id}})
@@ -47,7 +44,6 @@ export const getOneAirplanes = async (id: string) => {
         return null
     }
 }
-
 
 export const createAirplane = async (prevState: unknown, formData: FormData): Promise<ActionResult> => {
     const validatedFields = airplanesSchema.safeParse({
@@ -88,8 +84,9 @@ export const createAirplane = async (prevState: unknown, formData: FormData): Pr
         })
 
         revalidatePath("/dashboard/airplanes")
-
-        redirect("/dashboard/airplanes")
+        return {
+            success: true
+        }
     } catch (err) {
         const errorDesc: string = errorHandler(err)
 
@@ -153,7 +150,7 @@ export const updateAirplane = async (prevState: unknown, formData: FormData, id:
         if(validatedFields.data.code) airplaneUpdate.code = validatedFields.data.code
 
         if(validatedFields.data.name) airplaneUpdate.name = validatedFields.data.name
-        
+
         await prisma.airplane.update({
             where: {
                 id
@@ -177,6 +174,30 @@ export const updateAirplane = async (prevState: unknown, formData: FormData, id:
     }
 }
 
+export const deleteAirplane = async (id: string):Promise<ActionResult> => {
+    try {
+        const checkAirplane = await prisma.airplane.findUnique({where: {id}})
+
+        if(!checkAirplane) throw new Error("Data airplane not found!")
+
+        await deleteFile(BUCKET_AIRPLANES, checkAirplane.image)
+
+        await prisma.airplane.delete({where: {id: checkAirplane.id}})
+
+        revalidatePath("/dashboard/airplanes")
+        return {
+            success: true
+        }
+    } catch (err) {
+        const errorMessage = errorHandler(err)
+
+        return {
+            success: false,
+            errorTitle: "Failed Delete Airplane",
+            errorDesc: [errorMessage]
+        }
+    } 
+}
 
 // logic 1 update
     // const image = formData.get("image") as File

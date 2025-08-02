@@ -7,6 +7,7 @@ import type { Airplane } from "@/generated/prisma"
 import { ColumnDef } from "@tanstack/react-table"
 import { useMemo } from "react"
 import Image from "next/image"
+import { FormDeleteAirplane } from "./FormDeleteAirplane"
 
 export const useColumnsAirplanes = ()=> {
     const columns = useMemo(() => {
@@ -18,7 +19,7 @@ export const useColumnsAirplanes = ()=> {
                     const plane = row.original
 
                     if(!plane.image) return <span>Image not found!</span>
-                    
+
                     return (
                         <div>
                             <Image src={plane.image} alt={plane.name} width={180} height={180} className="rounded" />
@@ -46,6 +47,8 @@ export const useColumnsAirplanes = ()=> {
                                     <Pencil className="mr-2 size-4" /> Edit
                                 </Link>
                             </Button>
+
+                            <FormDeleteAirplane id={plane.id} />
                         </div>
                     )
                 }

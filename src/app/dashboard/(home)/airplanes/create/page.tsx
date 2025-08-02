@@ -5,8 +5,6 @@ export const metadata: Metadata = {
   title: "Airplanes | Create",
 };
 
-interface AirplanesCreatePageProps {}
-
 const AirplanesCreatePage = () => {
   return (
     <div>

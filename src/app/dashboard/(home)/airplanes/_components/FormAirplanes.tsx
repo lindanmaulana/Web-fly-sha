@@ -20,10 +20,11 @@ interface FormEditProps {
 }
 
 export const FormAirplanes = ({type, defaultValue}: FormEditProps) => {
-    const updateAirplaneWithId = (_state: ActionResult, formData: FormData) => updateAirplane(null, formData, defaultValue?.id)
+    const id = defaultValue?.id ? defaultValue.id : ""
+    const updateAirplaneWithId = (_state: ActionResult, formData: FormData) => updateAirplane(null, formData, id)
 
     const [state, formAction] = useActionState(type === "ADD" ? createAirplane : updateAirplaneWithId, initialState)
-    
+
     const router = useRouter()
     useEffect(() => {
         if(state.success) {
