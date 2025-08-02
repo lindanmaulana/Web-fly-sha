@@ -7,7 +7,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import type { Airplane } from "@/generated/prisma"
 import Image from "next/image"
-import { useActionState } from "react"
+import { useRouter } from "next/navigation"
+import { useActionState, useEffect } from "react"
 
 const initialState: ActionResult = {
     success: false
@@ -22,6 +23,14 @@ export const FormAirplanes = ({type, defaultValue}: FormEditProps) => {
     const updateAirplaneWithId = (_state: ActionResult, formData: FormData) => updateAirplane(null, formData, defaultValue?.id)
 
     const [state, formAction] = useActionState(type === "ADD" ? createAirplane : updateAirplaneWithId, initialState)
+    
+    const router = useRouter()
+    useEffect(() => {
+        if(state.success) {
+            router.replace("/dashboard/airplanes")
+        }
+
+    }, [router, state.success])
 
     return (
         <form action={formAction} className="w-[40%] space-y-4">

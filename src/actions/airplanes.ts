@@ -9,6 +9,8 @@ import { BUCKET_AIRPLANES } from "../lib/supabase/index"
 import { ActionResult } from "./login"
 import { uploadFile } from "./uploadFile"
 import { redirect } from "next/navigation"
+import supabase from "@/lib/supabase"
+import { deleteFile } from "./deleteFile"
 
 export const getAllAirplanes = async () => {
     try {
@@ -118,7 +120,6 @@ export const updateAirplane = async (prevState: unknown, formData: FormData, id:
 
     const validatedFields = validated.safeParse(dataUpdate)
 
-    console.log({validatedFields, dataUpdate})
     if(!validatedFields.success) {
         const errorDesc = validatedFields.error.issues.map((issue) => issue.message)
         return {
@@ -128,26 +129,31 @@ export const updateAirplane = async (prevState: unknown, formData: FormData, id:
         }
     }
 
-    if(image.size > 0) {
-        const imageUpload = await uploadFile(image)
-    
-        if(imageUpload instanceof Error) {
-            return {
-                success: false,
-                errorTitle: "Failed to upload file",
-                errorDesc: ['Terjadi masalah pada koneksi, silahkan coba lagi.']
-            }
-        }
-    
-        airplaneUpdate.image = imageUpload as string
-    }
-
-    if(validatedFields.data.code) airplaneUpdate.code = validatedFields.data.code
-
-    if(validatedFields.data.name) airplaneUpdate.name = validatedFields.data.name
-
     try {
+        const existingAirplane = await prisma.airplane.findUnique({where: {id}})
 
+        if(!existingAirplane) throw new Error("Airplane not found!")
+
+        if(image.size > 0) {
+            const imageUpload = await uploadFile(image)
+        
+            if(imageUpload instanceof Error) {
+                return {
+                    success: false,
+                    errorTitle: "Failed to upload file",
+                    errorDesc: ['Terjadi masalah pada koneksi, silahkan coba lagi.']
+                }
+            }
+            airplaneUpdate.image = imageUpload as string
+
+
+            await deleteFile(BUCKET_AIRPLANES, existingAirplane.image)
+        }
+
+        if(validatedFields.data.code) airplaneUpdate.code = validatedFields.data.code
+
+        if(validatedFields.data.name) airplaneUpdate.name = validatedFields.data.name
+        
         await prisma.airplane.update({
             where: {
                 id
@@ -157,7 +163,9 @@ export const updateAirplane = async (prevState: unknown, formData: FormData, id:
         })
 
         revalidatePath("/dashboard/airplanes")
-        redirect("/dashboard/airplanes")
+        return {
+            success: true
+        }
     } catch (err) {
         const errorMessage = errorHandler(err)
 
