@@ -199,6 +199,20 @@ export const deleteAirplane = async (id: string):Promise<ActionResult> => {
     } 
 }
 
+export const checkAirplane = async (id: string) => {
+    try {
+        const result = await prisma.airplane.findUnique({where: {id}})
+
+        if(!result) throw new Error("Airplane not found!")
+
+        return result
+    } catch (err) {
+        const errorMessage = errorHandler(err)
+
+        throw new Error(errorMessage)
+    }
+}
+
 // logic 1 update
     // const image = formData.get("image") as File
 
