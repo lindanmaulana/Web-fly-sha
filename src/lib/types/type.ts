@@ -15,3 +15,9 @@ export type TicketsWithRelation = Prisma.TicketGetPayload<{
         seat: true
     }
 }>
+
+export type UsersWithoutPassword = Prisma.UserGetPayload<{
+    omit: {
+        password: true
+    }
+}>

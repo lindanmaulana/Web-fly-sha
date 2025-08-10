@@ -1,5 +1,10 @@
 import { getAllTickets } from "@/actions/tickets"
 import { TableTickets } from "./_components/TableTickets"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+    title: "Dashboard | Tickets"
+}
 
 const PageTickets = async () => {
     const data = await getAllTickets()
