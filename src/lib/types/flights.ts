@@ -7,3 +7,11 @@ export type FlightsWithPlane = Prisma.FlightGetPayload<{
         seats: true
     }
 }>
+
+export type TicketsWithRelation = Prisma.TicketGetPayload<{
+    include: {
+        flight: true,
+        customer: true,
+        seat: true
+    }
+}>
