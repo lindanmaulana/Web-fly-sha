@@ -109,7 +109,7 @@ model Flight {
 model FlightSeat {
   id          String @id @default(cuid())
   flight_id   String
-  flight      Flight @relation(fields: [flight_id], references: [id])
+  flight      Flight @relation(fields: [flight_id], references: [id], onDelete: Cascade)
   seat_number String
   is_booked   Boolean? @default(false)
   type        TypeSeat

@@ -12,6 +12,7 @@ import Link from "next/link"
 import { useMemo } from "react"
 import { ColumnRouteFlight } from "./ColumnRouteFlight"
 import { ColumnSeatPrice } from "./ColumnSeatPrice"
+import { FormDeleteFlight } from "./FormDeleteFlight"
 
 export interface FlightColumn {
     flight: Flight
@@ -27,7 +28,6 @@ export const useColumnsFlights = () => {
                 cell: ({row}) => {
                     const flight = row.original as FlightsWithPlane
 
-                    console.log({flight})
                     const imageUrl = getPublicUrl(BUCKET_AIRPLANES, flight.plane.image)
 
                     return (
@@ -65,12 +65,12 @@ export const useColumnsFlights = () => {
                     return (
                         <div className="inline-flex gap-5 items-center">
                             <Button variant={"secondary"} size={"sm"} asChild>
-                                <Link href={`/dashboard/airplanes/edit/${flight.id}`}>
+                                <Link href={`/dashboard/flights/edit/${flight.id}`}>
                                     <Pencil className="mr-2 size-4" /> Edit
                                 </Link>
                             </Button>
 
-                            {/* <FormDeleteAirplane id={plane.id} /> */}
+                            <FormDeleteFlight id={flight.id} />
                         </div>
                     )
                 }

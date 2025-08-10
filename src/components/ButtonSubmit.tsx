@@ -12,7 +12,7 @@ interface ButtonSubmitProps {
     children?: ReactNode
 }
 export const ButtonSubmit = (props: ButtonSubmitProps) => {
-    const {textButton = "Submit", textLoading = "Loadiing...", style, variant = "default", children} = props
+    const {textButton = "Submit", textLoading = "Loading...", style, variant = "default", children} = props
     const {pending} = useFormStatus()
 
     return (
