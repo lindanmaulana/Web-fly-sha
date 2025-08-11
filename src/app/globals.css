@@ -37,11 +37,20 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-flysha-light-purple: var(--flysha-light-purple);
+  --color-flysha-black: var(--flysha-black) ;
+  --color-flysha-off-purple: var(--flysha-off-purple) ;
+  --color-flysha-bg-purple: var(--flysha-bg-purple) ;
+  --color-flysha-red: var(--flysha-red) ;
+  --color-flysha-grey: var(--flysha-grey);
+  --color-flysha-dark-grey: var(--flysha-dark-grey);
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 }
+
 
 :root {
   --radius: 0.625rem;
@@ -76,6 +85,13 @@
   --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
   --sidebar-border: oklch(0.929 0.013 255.508);
   --sidebar-ring: oklch(0.704 0.04 256.788);
+  --flysha-light-purple: #B88DFF;
+  --flysha-black: #080318;
+  --flysha-off-purple: #AEA6C7;
+  --flysha-bg-purple: #1D1730;
+  --flysha-red: #FF2A2A;
+  --flysha-grey: #909296;
+  --flysha-dark-grey: #393449;
 }
 
 .dark {
