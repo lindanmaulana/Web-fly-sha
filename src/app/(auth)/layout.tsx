@@ -1,8 +1,7 @@
-import Link from "next/link"
-import { ReactNode } from "react"
-import { Navbar } from "../_components/Navbar"
-import { CompanyLogos } from "../_components/CompanyLogos"
 import { Metadata } from "next"
+import { ReactNode } from "react"
+import { CompanyLogos } from "../_components/CompanyLogos"
+import { Navbar } from "../_components/Navbar"
 
 interface LayoutAuthProps {
     children: ReactNode

@@ -1,6 +1,6 @@
 import { FormSignup } from "./_components/FormSignup";
 
-const PageAuth = () => {
+const PageAuthSignup = () => {
   return (
     <div className="form-section container max-w-[1130px] w-full mx-auto flex flex-col gap-[30px] mt-[53px]">
       <div className="title flex flex-col gap-1">
@@ -14,4 +14,4 @@ const PageAuth = () => {
   );
 };
 
-export default PageAuth;
+export default PageAuthSignup;

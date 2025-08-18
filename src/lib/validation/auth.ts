@@ -2,7 +2,7 @@ import z from "zod";
 
 export const LoginSchema = z.object({
     email: z.email({error: "Email tidak valid"}),
-    password: z.string()
+    password: z.string().min(1, "Password tidak boleh kosong!")
 })
 
 export const RegisterSchema = z.object({
