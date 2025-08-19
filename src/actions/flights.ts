@@ -8,7 +8,6 @@ import { ActionResult } from "next/dist/server/app-render/types"
 import { redirect } from "next/navigation"
 import prisma from "../../lib/prisma"
 import { checkAirplane } from "./airplanes"
-import { success } from "zod"
 
 export const getAllFlights = async () => {
     try {
@@ -40,6 +39,30 @@ export const getOneFlights = async (id: string) => {
         console.log({errorMessage})
 
         return null
+    }
+}
+
+export const getCityFilter = async () => {
+    try {
+        const result = await prisma.flight.groupBy({
+            by: ["departure_city", "destination_city"],
+            where: {
+                departure_date: {
+                    gt: new Date()
+                }
+            },
+            _count: {
+                departure_city: true,
+                destination_city: true
+            }
+        })
+
+        return result
+    } catch (err) {
+        const errorMessage = errorHandler(err)
+        console.log({errorMessage})
+        
+        return []
     }
 }
 

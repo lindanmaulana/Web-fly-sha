@@ -18,7 +18,7 @@ const AuthLayout = async ({children}: AuthLayoutProps) => {
     if(session) {
         if(session.role === "ADMIN") redirect(REDIRECT_ADMIN)
 
-        if(session.role === "USER") redirect(REDIRECT_USER) 
+        if(session.role === "CUSTOMER") redirect(REDIRECT_USER) 
     }
     return (
         <section>

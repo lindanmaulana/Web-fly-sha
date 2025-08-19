@@ -9,7 +9,7 @@ declare module "next-auth" {
             name: string?;
             email: string
             passport: string?;
-            role: "ADMIN" | "USER" 
+            role: "ADMIN" | "CUSTOMER" 
         }
     }
 
@@ -18,7 +18,7 @@ declare module "next-auth" {
         name: string?;
         email: string
         passport: string?;
-        role: "ADMIN" | "USER"
+        role: "ADMIN" | "CUSTOMER"
     }
 }
 
@@ -28,6 +28,6 @@ declare module "next-auth/jwt" {
         name: string?;
         email: string
         passport: string?;
-        role: "ADMIN" | "USER"
+        role: "ADMIN" | "CUSTOMER"
     }
 }

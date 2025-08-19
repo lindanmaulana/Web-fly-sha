@@ -20,7 +20,7 @@ const DashboardLayout = async ({children}: DashboardLayoutProps) => {
     const session = await getSession()
 
     if(!session) redirect(REDIRECT_UNAUTHORIZED)
-    else if(session.role === "USER") redirect(REDIRECT_USER)
+    else if(session.role === "CUSTOMER") redirect(REDIRECT_USER)
 
     return (
         <section>

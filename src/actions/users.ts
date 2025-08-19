@@ -7,6 +7,8 @@ import { LoginSchema, RegisterSchema } from "@/lib/validation/auth"
 import bcrypt from "bcrypt"
 import { redirect } from "next/navigation"
 import { AuthServices } from "@/lib/services/auth"
+import { signIn } from "@/auth"
+import { success } from "zod"
 
 export const getAllUsers = async () => {
     try {
@@ -90,15 +92,11 @@ export const loginUsers = async (prevState: unknown, formData: FormData): Promis
     }
 
     try {
-        const result = await AuthServices.Login(validatedFields.data)
-
-        if(!result) {
-            return {
-                success: false,
-                errorTitle: "Login gagal!",
-                errorDesc: ['Invalid credentials']
-            }
-        }
+        await signIn("credentials", {
+            email: validatedFields.data.email,
+            password: validatedFields.data.password,
+            redirect: false
+        })
     } catch (err) {
         const errorMessage = errorHandler(err)
         console.log({errorMessage})

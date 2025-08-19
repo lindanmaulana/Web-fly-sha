@@ -1,7 +1,6 @@
 import { Metadata } from "next"
 import { ReactNode } from "react"
 import { CompanyLogos } from "../_components/CompanyLogos"
-import { Navbar } from "../_components/Navbar"
 
 interface LayoutAuthProps {
     children: ReactNode
@@ -16,7 +15,6 @@ const LayoutAuth = ({children}: LayoutAuthProps) => {
         <main className="text-white font-poppins bg-flysha-black">
             <section id="Signup" className="bg-[url('/assets/images/background/airplane.png')] bg-no-repeat bg-cover bg-left-top -z-10 min-h-screen">
                 <div className="Header-content bg-gradient-to-r from-[#080318] to-[rgba(8,3,24,0)] z=0 min-h-screen">
-                    <Navbar />
                     <div className="flex flex-col justify-between min-h-[calc(100vh-78px)]">
                         {children}
                         <CompanyLogos />
