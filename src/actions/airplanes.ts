@@ -28,6 +28,27 @@ export const getAllAirplanes = async () => {
     }
 }
 
+export const getAllAirplanesOptions = async () => {
+    try {
+        const result = await prisma.airplane.findMany({
+            where: {
+                flight: {
+                    every: {
+                        id: undefined
+                    }
+                }
+            }
+        })
+
+        return result
+    } catch (err) {
+        const errorMessage = errorHandler(err)
+        console.log({errorMessage})
+
+        return []
+    }
+}
+
 export const getOneAirplanes = async (id: string) => {
     try {
         const result = await prisma.airplane.findFirst({where: {id}})

@@ -8,7 +8,7 @@ export default async function Home() {
     const data = await getCityFilter()
 
   return (
-      <main className="text-white font-poppins bg-flysha-black">
+      <>
             <section id="Header" className="bg-[url('/assets/images/background/airplane.png')] bg-no-repeat bg-cover bg-left-top -z-10">
                 <div className="Header-content bg-gradient-to-r from-[#080318] to-[rgba(8,3,24,0)] z=0">
                     <Navbar />
@@ -486,6 +486,6 @@ export default async function Home() {
                 </div>
                 <p className="mx-auto mt-[60px] text-[#A0A0AC] text-sm z-10">All Rights Reserved. Copyright BuildWithAngga 2024.</p>
             </footer>
-        </main>
+        </>
   );
 }
